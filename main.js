@@ -112,6 +112,12 @@ function discardMerchantEdits(event) {
 
 function submitMerchant(event) {
   event.preventDefault()
+  
+  if (!newMerchantName.value) {
+    showStatus('Error: Please enter a merchant name before submitting.', false)
+    return
+  }
+
   var merchantName = newMerchantName.value
   postData('merchants', { name: merchantName })
     .then(postedMerchant => {
@@ -154,6 +160,12 @@ function showMerchantItemsView(id, items) {
 // Functions that add data to the DOM
 function displayItems(items) {
   itemsView.innerHTML = ''
+
+  if (items.length === 0) {
+    itemsView.innerHTML = '<p class="no-items-message">No Items Yet For This Merchant</p>'
+    return
+  }
+
   let firstHundredItems = items.slice(0, 99)
   firstHundredItems.forEach(item => {
     let merchant = findMerchant(item.attributes.merchant_id).attributes.name
@@ -168,6 +180,7 @@ function displayItems(items) {
     `
   })
 }
+
 
 function displayMerchants(merchants) {
     merchantsView.innerHTML = ''
