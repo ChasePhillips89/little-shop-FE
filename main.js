@@ -150,6 +150,7 @@ function showItemsView() {
 
 function showMerchantItemsView(id, items) {
   showingText.innerText = `All Items for Merchant #${id}`
+  itemsView.innerHTML = '' // Ensures previous items don't stay
   show([itemsView])
   hide([merchantsView, addNewButton])
   addRemoveActiveNav(itemsNavButton, merchantsNavButton)
@@ -226,7 +227,8 @@ function displayAddedMerchant(merchant) {
 function displayMerchantItems(event) {
   let merchantId = event.target.closest("article").id.split('-')[1]
   const filteredMerchantItems = filterByMerchant(merchantId)
-  showMerchantItemsView(merchantId, filteredMerchantItems)
+  itemsView.innerHTML = '' 
+  displayItems(filteredMerchantItems)
 }
 
 //Helper Functions
